@@ -38,10 +38,6 @@ $fornecedores = $objFornecedores->listar();
 			</td>
 		</tr>
 		<tr>
-			<td>ID do Produto:</td> 
-			<td><input type="text" alt="ID" id="id_produto" maxlength="5" name="id_produto" size="20" width="20" /></td>
-		</tr>
-		<tr>
 			<td>Nome do Produto:</td> 
 			<td><input type="text" alt="Nome" id="nome_produto" maxlength="200" name="nome_produto" size="60" width="60" /></td>
 		</tr>

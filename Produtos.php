@@ -28,6 +28,7 @@ class Produtos {
 		}
 		$query .= " order by nome_produto, nome_fornecedor";
 		$stmt = $this->db->prepare($query);
+		
 		$stmt->execute();
 		
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -45,8 +46,12 @@ class Produtos {
 	}
 	
 	public function inserir(Array $dados) {
-
-		if($this->verificarNome($dados["nome_produto"]) == 0){
+		
+		print_r($dados);echo("<br/>");echo("<br/>");
+		
+		$dados["id_produto"] = $this->verificarNome($dados["nome_produto"]);
+		if(empty($dados["id_produto"]) ){
+			$dados["id_produto"] = $this->pegarProximoIdP();
 			$query = "insert into {$this->table} (id, nome, unidade)
 				Values ( :id, :nome, :unidade ) ";
 			$stmt = $this->db->prepare($query);
@@ -65,6 +70,15 @@ class Produtos {
 		$stmt2->bindParam(':qt', $dados["quantidade"]);
 		return $stmt2->execute();
 	}
+
+	public function pegarProximoIdP(){
+		$query = "select max(id) + 1 as id from projeto1.produtos";
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+		$retorno = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	
+		return intval($retorno[0]["id"]);
+	}
 	
 	public function pegarProximoIdFP(){
 		$query = "select max(id) + 1 as id from fornecedor_produto";
@@ -77,30 +91,27 @@ class Produtos {
 	
 	public function verificarNome($nome){
 
-		$query = "select count(0) as qt from {$this->table} where nome LIKE :nome";
+		$query = "select id from {$this->table} where nome LIKE :nome";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindParam(':nome', $nome);
 		$stmt->execute();
 		$retorno = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 		
-		return intval($retorno[0]["qt"]);
+		return intval($retorno[0]["id"]);
 	}
 	
 	public function tratarDados(Array $dados){
-		if (empty($dados["id_fornecedor"]) || empty($dados["id_produto"]) || 
+		if (empty($dados["id_fornecedor"]) || 
 				empty($dados["nome_produto"]) || empty($dados["quantidade"]) || 
 				empty($dados["unidade"])){
 			throw new Exception("Dados requisitados não foram informados");
 		}
-		if (!is_numeric($dados["id_fornecedor"]) || !is_numeric($dados["id_produto"]) || !is_numeric($dados["quantidade"])) {
+		if (!is_numeric($dados["id_fornecedor"]) || !is_numeric($dados["quantidade"])) {
 			throw new Exception("campo só pode receber valor numérico");
-		}
-		if($this->verificarId($dados["id_produto"]) > 0){
-			throw new Exception("id do produto ja existe");
 		}
 		
 		foreach ($dados as $key => $value) {
-			if ($key != "id_fornecedor" && $key != "id_produto" && $key != "nome_produto"
+			if ($key != "id_fornecedor" && $key != "nome_produto"
 					&& $key != "quantidade" && $key != "unidade") {
 				unset($dados[$key]);
 			};
@@ -109,12 +120,13 @@ class Produtos {
 	}
 	
 	public function tratarDadosFind(Array $dadosfind){
-		if (!isset($dadosfind["id_produto"]) && !isset($dadosfind["nome_produto"]) && !isset($dadosfind["id_fornecedor"])){
+		if (empty($dadosfind["id_produto"]) && empty($dadosfind["nome_produto"]) && empty($dadosfind["id_fornecedor"])){
 			$dadosfind = array();
 		}
 		if (isset($dadosfind["id_produto"]) && !is_numeric($dadosfind["id_produto"])) {
 			unset($dadosfind["id_produto"] );
 		}
+
 		if (isset($dadosfind["id_fornecedor"]) && !is_numeric($dadosfind["id_fornecedor"])) {
 			unset($dadosfind["id_fornecedor"] );
 		}

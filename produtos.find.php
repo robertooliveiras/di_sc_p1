@@ -8,7 +8,7 @@ $fornecedores = $objFornecedores->listar();
 	target="">
 	<table>
 		<tr>
-			<td colspan="2" align="right">
+			<td colspan="2" align="left">
 				<input type="button" alt="novo fornecedor" name="nf" id="nf" value="Novo fornecedor" onclick="javascript:document.location.href='fornecedor.form.php'" />
 				<input type="button" alt="novo produto" name="np" id="np" value="Novo produto" onclick="javascript:document.location.href='produto.form.php'" />
 			</td>
@@ -17,7 +17,7 @@ $fornecedores = $objFornecedores->listar();
 			<td colspan="2" align="center">
 			<?php if (isset($_GET["e"])): ?>
 				<p style="color:red;"><?php echo $_GET["e"]; ?></p>
-			<?php endif; ?>
+			<?php endif; ?>&nbsp;
 			</td>
 		</tr>
 		<tr>

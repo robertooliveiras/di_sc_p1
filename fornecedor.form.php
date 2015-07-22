@@ -16,10 +16,6 @@
 			</td>
 		</tr>
 		<tr>
-			<td>ID do Fornecedor:</td> 
-			<td><input type="text" alt="ID" id="id_fornecedor" maxlength="5" name="id_fornecedor" size="20" width="20" /></td>
-		</tr>
-		<tr>
 			<td>Nome do Fornecedor:</td> 
 			<td><input type="text" alt="Nome" id="nome_fornecedor" maxlength="200" name="nome_fornecedor" size="60" width="60" /></td>
 		</tr>

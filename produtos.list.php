@@ -20,7 +20,7 @@
 		<td><?php echo $produto["id_fornecedor"]; ?></td>
 		<td><?php echo $produto["nome_fornecedor"]; ?></td>
 		<td><?php echo $produto["email"]; ?></td>
-		<td align="center">-</td>
+		<td align="center"> R | U | D </td>
 	</tr>
 	<?php endforeach;?>
 	<?php else:?>
