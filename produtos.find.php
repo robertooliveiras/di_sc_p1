@@ -3,16 +3,8 @@ $objFornecedores = new Fornecedor($conexao);
 $fornecedores = $objFornecedores->listar();
 ?>
 
-<form name="produtos" id="produtos" action="index.php" 
-	contenteditable="true" method="post" tabindex="1" title="Pesquisa de Produtos"
-	target="">
+<form name="produtos" action="index.php" method="post" >
 	<table>
-		<tr>
-			<td colspan="2" align="left">
-				<input type="button" alt="novo fornecedor" name="nf" id="nf" value="Novo fornecedor" onclick="javascript:document.location.href='fornecedor.form.php'" />
-				<input type="button" alt="novo produto" name="np" id="np" value="Novo produto" onclick="javascript:document.location.href='produto.form.php'" />
-			</td>
-		</tr>
 		<tr>
 			<td colspan="2" align="center">
 			<?php if (isset($_GET["e"])): ?>

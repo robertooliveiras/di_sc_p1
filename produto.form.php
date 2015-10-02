@@ -1,24 +1,19 @@
 <?php 
 error_reporting(E_ALL);
 ini_set('display_errors','On');
-
+require_once "config.php";
 require_once "Conexao.php";
 require_once 'Fornecedor.php';
- 
-$conexao = new Conexao("localhost", "projeto1", "root", "th1nk1ng0utl0ud");
+
+$conexao = new Conexao($GLOBALS['myHost'], $GLOBALS['myDb'], $GLOBALS['myUsr'], $GLOBALS['myPwd']);
 
 $objFornecedores = new Fornecedor($conexao);
 $fornecedores = $objFornecedores->listar();
+require_once 'topo.php';
 ?>
 
-<form name="produto" id="produto" action="produto.controle.php" 
-	contenteditable="true" method="post" tabindex="1" title="Cadastro de Produtos">
+<form name="produto" action="produto.controle.php" method="post">
 	<table>
-		<tr>
-			<td colspan="2" align="right">
-				<input type="button" alt="Produtos" name="nf" id="nf" value="Produtos" onclick="javascript:document.location.href='index.php'" />
-			</td>
-		</tr>
 		<tr>
 			<td colspan="2" align="center" style="color:red;">
 			<?php if (isset($_GET["e"])): ?>
@@ -51,9 +46,12 @@ $fornecedores = $objFornecedores->listar();
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
-				<input type="submit" alt="Adicionar produto" name="Adicionar" id="Adicionar" />
+				<input type="submit" value="Adicionar produto" name="Adicionar" id="Adicionar" />
 			</td>
 		</tr>
 	</table>
 
 </form>
+
+<?php
+require_once 'footer.php';

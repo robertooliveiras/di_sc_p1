@@ -1,12 +1,13 @@
 <?php
 // error_reporting(E_ALL);
 // ini_set('display_errors','On');
+require_once "config.php";
 require_once "Conexao.php";
-require_once 'Fornecedor.php';
-require_once 'Produtos.php';
+require_once "Fornecedor.php";
+require_once "Produtos.php";
 
 try {
-	$conexao = new Conexao("localhost", "projeto1", "root", "th1nk1ng0utl0ud");
+	$conexao = new Conexao($GLOBALS['myHost'], $GLOBALS['myDb'], $GLOBALS['myUsr'], $GLOBALS['myPwd']);
 	$objFornecedor = new Fornecedor($conexao);
 	
 	$dados = $objFornecedor->tratarDados($_POST);

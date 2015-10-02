@@ -50,7 +50,7 @@ class Fornecedor {
 	
 	public function verificarNome($nome){
 
-		$query = "select count(0) as qt from {$this->table} where nome LIKE :nome";
+		$query = "select count(0) as qt from {$this->table} where nome ILIKE :nome";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindParam(':nome', $nome);
 		$stmt->execute();
